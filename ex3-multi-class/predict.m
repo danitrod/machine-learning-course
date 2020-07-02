@@ -8,7 +8,7 @@ m = size(X, 1);
 num_labels = size(Theta2, 1);
 
 % You need to return the following variables correctly 
-p = zeros(size(X, 1), 1);
+p = zeros(size(X, 1), 2);
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: Complete the following code to make predictions using
@@ -26,7 +26,7 @@ for pred = 1:m
     hiddenLayer = [1 sigmoid(X(pred,:) * Theta1')];
     outputLayer = sigmoid(hiddenLayer * Theta2');
     [value, index] = max(outputLayer);
-    p(pred) = index;
+    p(pred, :) = [index value];
 end
 
 
