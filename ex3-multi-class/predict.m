@@ -8,7 +8,8 @@ m = size(X, 1);
 num_labels = size(Theta2, 1);
 
 % You need to return the following variables correctly 
-p = zeros(size(X, 1), 2);
+% Returning the number label, the confidence, and the second highest confidence with label.
+p = zeros(size(X, 1), 4);
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: Complete the following code to make predictions using
@@ -25,8 +26,19 @@ X = [ones(m, 1) X];
 for pred = 1:m
     hiddenLayer = [1 sigmoid(X(pred,:) * Theta1')];
     outputLayer = sigmoid(hiddenLayer * Theta2');
+    
+    % Get first prediction
     [value, index] = max(outputLayer);
-    p(pred, :) = [index value];
+    p(pred, 1:2) = [index value];
+
+    % Get second prediction
+    outputLayer(index) = [];
+    [value, secondIndex] = max(outputLayer);
+    if secondIndex >= index
+        % Sum 1 because of the removed index.
+        secondIndex += 1;
+    end
+    p(pred, 3:4) = [secondIndex value];
 end
 
 
